@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Pure - Marine Services</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #005f87;
+            --primary-dark: #003d5b;
+            --secondary: #ff7d00;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --text: #333;
+            --text-light: #6c757d;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            max-width: 100%;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Hide nav on mobile by default */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                width: 100%;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 10px;
+                color: var(--dark);
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero {
+                margin-top: 70px;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            margin-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: relative;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--white);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .slide-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #eee;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .slider-controls button {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-controls button:hover {
+            background-color: var(--primary);
+        }
+
+        /* Quick Services */
+        .quick-services {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .quick-services h2 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--light);
+            padding: 30px 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .service-card i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            margin-bottom: 20px;
+        }
+
+        .service-card a {
+            color: var(--primary);
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .why-choose h2 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .feature {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .feature i {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Clients */
+        .clients {
+            padding: 60px 0;
+            background-color: var(--white);
+        }
+
+        .clients h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .client-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .client-logos img {
+            height: 60px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            display: none;
+            text-align: center;
+        }
+
+        .testimonial.active {
+            display: block;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            background-color: var(--primary);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta h2 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 60px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-logo img {
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links ul,
+        .footer-services ul {
+            list-style: none;
+        }
+
+        .footer-links ul li,
+        .footer-services ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a,
+        .footer-services a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-links a:hover,
+        .footer-services a:hover {
+            color: var(--white);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Planet Pure Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="certificates.html">Certificates</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-slider">
+            <div class="slide active">
+                <img src="images/hero1.jpg" alt="Marine Services">
+                <div class="slide-content">
+                    <h1>Premium Marine Solutions</h1>
+                    <p>Trusted by leading maritime companies worldwide</p>
+                    <a href="contact.html" class="btn">Get a Quote</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/hero2.jpg" alt="Tank Cleaning">
+                <div class="slide-content">
+                    <h1>Expert Tank Cleaning</h1>
+                    <p>MARPOL compliant services for all vessel types</p>
+                    <a href="services.html" class="btn">Our Services</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="images/hero3.jpg" alt="Marine Projects">
+                <div class="slide-content">
+                    <h1>Project Management</h1>
+                    <p>End-to-end solutions for complex marine operations</p>
+                    <a href="projects.html" class="btn">View Projects</a>
+                </div>
+            </div>
+        </div>
+        <div class="slider-controls">
+            <button class="prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section class="quick-services">
+        <div class="container">
+            <h2>Our Core Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-tint"></i>
+                    <h3>Tank Cleaning / De-Mucking</h3>
+                    <p>Comprehensive cleaning solutions for all tank types</p>
+                    <a href="services.html#tank-cleaning">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-trash-alt"></i>
+                    <h3>De-slopping</h3>
+                    <p>Efficient removal of residual cargo and sludge</p>
+                    <a href="services.html#deslopping">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-wind"></i>
+                    <h3>Gas Freeing</h3>
+                    <p>Safe gas freeing and inerting services</p>
+                    <a href="services.html#gas-freeing">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-pipe"></i>
+                    <h3>Pipeline Pigging</h3>
+                    <p>Advanced pipeline cleaning and inspection</p>
+                    <a href="services.html#pipeline-pigging">Learn More</a>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>Marine Project Management</h3>
+                    <p>End-to-end project coordination</p>
+                    <a href="services.html#project-management">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose">
+        <div class="container">
+            <h2>Why Choose Planet Pure?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Experienced Staff</h3>
+                    <p>Certified professionals with decades of combined experience</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-clock"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock service availability</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-certificate"></i>
+                    <h3>MARPOL/IMO Compliant</h3>
+                    <p>Full compliance with international regulations</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-truck"></i>
+                    <h3>Advanced Vehicles</h3>
+                    <p>Modern equipment fleet</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Timely Delivery</h3>
+                    <p>On-time project completion guarantee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="clients">
+        <div class="container">
+            <h2>Trusted By Industry Leaders</h2>
+            <div class="client-logos">
+                <img src="images/client1.png" alt="Client 1">
+                <img src="images/client2.png" alt="Client 2">
+                <img src="images/client3.png" alt="Client 3">
+                <img src="images/client4.png" alt="Client 4">
+                <img src="images/client5.png" alt="Client 5">
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <p>"Planet Pure's tank cleaning service exceeded our expectations. Their team was professional and completed the job ahead of schedule."</p>
+                    <div class="client-info">
+                        <h4>John Smith</h4>
+                        <p>Operations Manager, ABC Shipping</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>"Their MARPOL compliance expertise saved us from potential fines. Highly recommended for any marine cleaning needs."</p>
+                    <div class="client-info">
+                        <h4>Sarah Johnson</h4>
+                        <p>Technical Director, XYZ Tankers</p>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p>"The pipeline pigging operation was flawless. Planet Pure's equipment and crew made a complex job look easy."</p>
+                    <div class="client-info">
+                        <h4>Michael Brown</h4>
+                        <p>Project Engineer, DEF Energy</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-controls">
+                <button class="prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Discuss Your Project?</h2>
+            <p>Contact us today for a free consultation and quote</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn">Request Quote</a>
+                <a href="tel:+1234567890" class="btn"><i class="fas fa-phone"></i> Call Now</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <img src="images/logo-white.png" alt="Planet Pure">
+                    <p>Marine Cleaning & Project Management Specialists</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="certificates.html">Certificates</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="services.html#tank-cleaning">Tank Cleaning</a></li>
+                        <li><a href="services.html#deslopping">De-slopping</a></li>
+                        <li><a href="services.html#gas-freeing">Gas Freeing</a></li>
+                        <li><a href="services.html#pipeline-pigging">Pipeline Pigging</a></li>
+                        <li><a href="services.html#project-management">Project Management</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Maritime Avenue, Port City</p>
+                    <p><i class="fas fa-phone"></i> +1 (234) 567-8900</p>
+                    <p><i class="fas fa-envelope"></i> info@planetpure.com</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 Planet Pure Marine Services. All Rights Reserved.</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            const navMenu = document.querySelector('nav ul');
+
+            // Toggle mobile menu
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                navMenu.classList.toggle('show');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
+                mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    navMenu.classList.remove('show');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                }
+            });
+
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navMenu.classList.remove('show');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                });
+            });
+
+            // Hero Slider
+            const slides = document.querySelectorAll('.hero-slider .slide');
+            const prevBtn = document.querySelector('.slider-controls .prev');
+            const nextBtn = document.querySelector('.slider-controls .next');
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[index].classList.add('active');
+                currentSlide = index;
+            }
+
+            function nextSlide() {
+                let newIndex = (currentSlide + 1) % slides.length;
+                showSlide(newIndex);
+            }
+
+            function prevSlide() {
+                let newIndex = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(newIndex);
+            }
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            setInterval(nextSlide, 5000);
+
+            // Testimonial Slider
+            const testimonials = document.querySelectorAll('.testimonial-slider .testimonial');
+            const testimonialPrev = document.querySelector('.testimonial-controls .prev');
+            const testimonialNext = document.querySelector('.testimonial-controls .next');
+            let currentTestimonial = 0;
+
+            function showTestimonial(index) {
+                testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+                testimonials[index].classList.add('active');
+                currentTestimonial = index;
+            }
+
+            testimonialNext.addEventListener('click', function() {
+                let newIndex = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(newIndex);
+            });
+
+            testimonialPrev.addEventListener('click', function() {
+                let newIndex = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+                showTestimonial(newIndex);
+            });
+        });
+
+
+    </script>
+</body>
+</html>

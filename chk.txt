@@ -1,0 +1,42 @@
+planet-pure/
+├── index.html
+├── services.html
+├── about.html
+├── projects.html
+├── certificates.html
+├── contact.html
+├── styles.css
+├── script.js
+└── images/
+    ├── logo.png
+    ├── logo-white.png
+    ├── hero1.jpg
+    ├── hero2.jpg
+    ├── hero3.jpg
+    ├── page-hero-bg.jpg
+    ├── tank-cleaning.jpg
+    ├── tank-diagram.png
+    ├── deslopping.jpg
+    ├── gas-freeing.jpg
+    ├── client1.png
+    ├── client2.png
+    ├── client3.png
+    ├── client4.png
+    ├── client5.png
+    ├── about-team.jpg
+    ├── iso-cert.jpg
+    ├── marpol-cert.jpg
+    ├── dm-approved.jpg
+    ├── facility1.jpg
+    ├── facility2.jpg
+    ├── facility3.jpg
+    ├── project1-before.jpg
+    ├── project1-after.jpg
+    ├── project2-before.jpg
+    ├── project2-after.jpg
+    ├── cert1-thumb.jpg
+    ├── cert1-full.jpg
+    ├── cert2-thumb.jpg
+    ├── cert2-full.jpg
+    ├── cert3-thumb.jpg
+    ├── cert3-full.jpg
